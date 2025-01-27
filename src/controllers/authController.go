@@ -40,3 +40,34 @@ func Register(c fiber.Ctx) error {
 		"message" : "hello",
 	})
 }
+
+func Login(c fiber.Ctx) error {
+
+	var data map[string]string
+
+	if err := c.Bind().JSON(&data); err != nil {
+        return err
+    }
+
+	var user models.User
+
+	database.DB.Where("email = ?", data["email"]).First(&user)
+
+	if user.Id == 0 {
+		c.Status(fiber.StatusBadRequest)
+
+		return c.JSON(fiber.Map{
+			"message" : "Invalid credentials",
+		})
+	}
+	
+	
+	if err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"])) ; err  != nil{
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"message" : "Invalid credentials",
+		})
+	}
+
+	return c.JSON(user)
+}
