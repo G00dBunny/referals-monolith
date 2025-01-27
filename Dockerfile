@@ -7,4 +7,8 @@ RUN go mod download
 
 COPY . .
 
-CMD ["go", "run", "main.go"]
+# binary will be $(go env GOPATH)/bin/air
+RUN curl -sSfL https://raw.githubusercontent.com/air-verse/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+
+
+CMD ["air"]
