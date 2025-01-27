@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"referals/src/database"
-	"referals/src/routes"
+	routes "referals/src/router"
 
 	"github.com/gofiber/fiber/v3"
 )
