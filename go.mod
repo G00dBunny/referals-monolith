@@ -2,11 +2,7 @@ module referals
 
 go 1.23.3
 
-require (
-	github.com/gofiber/fiber v1.14.6
-	gorm.io/driver/mysql v1.5.7
-	gorm.io/gorm v1.25.12
-)
+require github.com/gofiber/fiber v1.14.6
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
@@ -34,4 +30,6 @@ require (
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
+	gorm.io/driver/mysql v1.5.7 // indirect
+	gorm.io/gorm v1.25.12 // indirect
 )
