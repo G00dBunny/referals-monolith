@@ -3,7 +3,10 @@ package controllers
 import (
 	"referals/src/database"
 	"referals/src/models"
+	"strconv"
+	"time"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v3"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -69,5 +72,20 @@ func Login(c fiber.Ctx) error {
 		})
 	}
 
-	return c.JSON(user)
+	payload := jwt.StandardClaims{
+		Subject : strconv.Itoa(int(user.Id)),
+		ExpiresAt : time.Now().Add(time.Hour * 24).Unix(),
+	}
+
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, payload).SignedString([]byte("secret"))
+
+	if err != nil {
+		c.Status(fiber.StatusBadRequest)
+
+		return c.JSON(fiber.Map{
+			"message" : "Invalid credentials",
+		})
+	}
+
+	return c.JSON(token)
 }

@@ -7,6 +7,9 @@ import (
 )
 
 func Setup(app *fiber.App){
+	app.Get("/", func(c fiber.Ctx) error {
+		return c.SendString("Server is working! 🚀")
+	})
 	api := app.Group("api")
 	admin := api.Group("admin")
 
